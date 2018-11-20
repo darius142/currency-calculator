@@ -28,7 +28,6 @@ class App extends Component {
   componentWillMount() {
     const { getCurrencyRates } = this.props;
     var date = moment().format('YYYY-MM-DD');
-    console.log('date is', date)
     getCurrencyRates(date);
   }
 

@@ -1,28 +1,246 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import classNames from 'classnames';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import ReactTable from 'react-table';
+import Grid from '@material-ui/core/Grid';
 
 import withStyles from '@material-ui/core/styles/withStyles';
+import "react-table/react-table.css";
 
 const styles = (theme) => ({
   root: {
+    padding: '0 1rem',
+    marginBottom: '3rem'
+  },
+  table: {
+    border: 'none'
+  },
+  modifyTable: {
+    border: '1px solid rgba(0,0,0,0.1)'
+  },
+  modifyThead: {
+    boxShadow: 'none!important',
+    backgroundColor: 'rgba(227, 227, 227, 0.7)',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none!important'
+    },
+  },
+  modifyTr: {
+    height: '56px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    [theme.breakpoints.down('sm')]: {
+      display: 'contents!important'
+    },
+  },
+  modifyGroupTr: {
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: '10px',
+      border: '1px solid rgba(0,0,0,0.1)'
+    },
+    '&:hover': {
+      cursor: 'pointer'
+    }
+  },
+  modifyTh: {
+    '&:focus': {
+      outline: 'none !important'
+    },
+    height: '78px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: 'none'
+  },
+  modifyTbody: {
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '100%!important'
+    }
+  },
+  modifyTd: {
+    '& span': {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'space-between',
+      '&::before': {
+        content: 'attr(data-label)',
+        float: 'left',
+        textTransform: 'uppercase',
+        fontWeight: '600',
+        fontFamily: 'Lato, san-serif',
+        [theme.breakpoints.up('sm')]: {
+          content: '""',
+          display: 'none'
+        },
+      },
+
+    },
+    [theme.breakpoints.down('sm')]: {
+      display: 'table-cell',
+      textAlign: 'left',
+      fontSize: '14px',
+      borderBottom: 'none',
+      width: '100%!important'
+    }
   }
 });
 
+const data = [
+  {
+    unit_value: 1,
+    currency_code: "AUD",
+    median_rate: "4.753180",
+    buying_rate: "4.738920",
+    selling_rate: "4.767440",
+  },
+  {
+    unit_value: 1,
+    currency_code: "CAD",
+    median_rate: ".939728",
+    buying_rate: "4.924909",
+    selling_rate: "4.954547",
+  },
+  {
+    unit_value: 1,
+    currency_code: "DKK",
+    median_rate: "0.995121",
+    buying_rate: "0.992136",
+    selling_rate: "0.998106",
+  }
+];
+
+
 class CurrencyRateInfo extends Component {
+  state = {
+    data: data
+  };
+
+  componentWillReceiveProps(nextProps) {
+  this.setState({
+    rates: [...nextProps.rates]
+  })
+  }
 
   render() {
-    const { classes } = this.props;
+    const { classes, isFetching } = this.props;
+    const { rates } = this.state;
+
+    const columns = [
+      {
+        id: 'amount',
+        Header: 'Amount',
+        accessor: d => <span data-label='Amount'>{rates.unit_value || ''}</span>
+      },
+      {
+        id: 'currency_code',
+        Header: 'Currency code',
+        accessor: d => <span data-label='Currency code'>{rates.currency_code || ''}</span>,
+      },
+      {
+        id: 'median_rate',
+        Header: 'Median rate',
+        accessor: d => <span data-label='Median rate'>{rates.median_rate || ''}</span>,
+      },
+      {
+        id: 'buying_rate',
+        Header: 'Buying rate',
+        accessor: d => <span data-label='Median rate'>{rates.buying_rate || ''}</span>,
+      },
+      {
+        id: 'selling_rate',
+        Header: 'Selling rate',
+        accessor: d => <span data-label='Selling rate'>{rates.selling_rate || ''}</span>,
+      }
+    ];
+
     return (
-      <div className={classNames("CurrencyRateInfo", classes.root)}>
-        <h1>Currency rates</h1>
+      <div className={classes.root}>
+        {!isFetching && (
+            <Grid container>
+              <Grid item xs={12}>
+                <h1>
+                  Currency info
+                </h1>
+                <Grid item xs={12}>
+                  <ReactTable
+                    data={rates}
+                    defaultPageSize={rates.length}
+                    className={`${classes.table} -striped`}
+                    showPagination={false}
+                    columns={
+                      [
+                        {
+                          id: 'amount',
+                          Header: 'Amount',
+                          accessor: d => <span data-label='Amount'>{d.unit_value || ''}</span>
+                        },
+                        {
+                          id: 'currency_code',
+                          Header: 'Currency code',
+                          accessor: d => <span data-label='Currency code'>{d.currency_code || ''}</span>,
+                        },
+                        {
+                          id: 'median_rate',
+                          Header: 'Median rate',
+                          accessor: d => <span data-label='Median rate'>{d.median_rate || ''}</span>,
+                        },
+                        {
+                          id: 'buying_rate',
+                          Header: 'Buying rate',
+                          accessor: d => <span data-label='Median rate'>{d.buying_rate || ''}</span>,
+                        },
+                        {
+                          id: 'selling_rate',
+                          Header: 'Selling rate',
+                          accessor: d => <span data-label='Selling rate'>{d.selling_rate || ''}</span>,
+                        }
+                      ]
+                    }
+                    getTrProps={() => {
+                      return {
+                        className: classes.modifyTr
+                      };
+                    }}
+                    getTheadProps={() => {
+                      return {
+                        className: classes.modifyThead
+                      };
+                    }}
+                    getTheadThProps={() => {
+                      return {
+                        className: classes.modifyTh
+                      };
+                    }}
+                    getTableProps={() => {
+                      return {
+                        className: classes.modifyTable
+                      };
+                    }}
+                    getTbodyProps={() => {
+                      return {
+                        className: classes.modifyTbody
+                      };
+                    }}
+                    getTdProps={() => {
+                      return {
+                        className: classes.modifyTd
+                      };
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+        )}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  rates: state.rates
+  rates: state.exchange.rates,
+  isFetching: state.exchange.isFetching
 });
 
-export default withStyles(styles)(connect(mapStateToProps)(CurrencyRateInfo));
+const mapDispatchToProps = (dispatch) => ({});
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(CurrencyRateInfo));
