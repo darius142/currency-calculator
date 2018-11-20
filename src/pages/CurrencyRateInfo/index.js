@@ -88,13 +88,13 @@ const styles = (theme) => ({
 
 class CurrencyRateInfo extends Component {
   state = {
-    rates: []
+    rates: this.props.rates || []
   };
 
   componentWillReceiveProps(nextProps) {
-  this.setState({
-    rates: [...nextProps.rates]
-  })
+    this.setState({
+      rates: [...nextProps.rates]
+    })
   }
 
   render() {
