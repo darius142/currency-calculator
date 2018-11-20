@@ -1,5 +1,5 @@
-import apiClient from './';
+import jsonpP from 'jsonp-p';
 
 export const getTheRates = (date) => {
-  return apiClient.get(`/rates/daily/?date=${date}`)
+  return jsonpP(`http://hnbex.eu/api/v1/rates/daily/?date=${date}`).promise;
 }

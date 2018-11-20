@@ -12,19 +12,18 @@ const styles = (theme) => ({
 class CurrencyCalculator extends Component {
 
   render() {
-    const { classes } = this.props;
+    const { classes, rates } = this.props;
+
     return (
       <div className={classNames("CurrencyCalculator", classes.root)}>
-        CurrencyCalculator Page
+        <h1>Currency calculator</h1>
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
+  rates: state.exchange.rates
 });
 
-const mapDispatchToProps = (dispatch) => ({
-});
-
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(CurrencyCalculator));
+export default withStyles(styles)(connect(mapStateToProps, null)(CurrencyCalculator));

@@ -5,10 +5,11 @@
   "dependencies": {
     "@material-ui/core": "^3.3.2",
     "@material-ui/icons": "^3.0.1",
-    "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "dotenv": "^6.1.0",
     "history": "^4.7.2",
+    "jsonp-p": "^2.0.0",
+    "moment": "^2.22.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-redux": "^5.0.7",

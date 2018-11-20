@@ -15,16 +15,14 @@ class CurrencyRateInfo extends Component {
     const { classes } = this.props;
     return (
       <div className={classNames("CurrencyRateInfo", classes.root)}>
-        CurrencyRateInfo Page
+        <h1>Currency rates</h1>
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
+  rates: state.rates
 });
 
-const mapDispatchToProps = (dispatch) => ({
-});
-
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(CurrencyRateInfo));
+export default withStyles(styles)(connect(mapStateToProps)(CurrencyRateInfo));

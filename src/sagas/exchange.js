@@ -10,10 +10,10 @@ import {
   getTheRatesFailure,
 } from 'actions/exchange';
 
-function* getRatesSaga() {
+function* getRatesSaga(action) {
   try {
-    const response = yield call(getTheRates);
-    yield put(getTheRatesSuccess());
+    const response = yield call(getTheRates, action.payload);
+    yield put(getTheRatesSuccess(response));
   } catch (e) {
     console.log(GET_THE_RATES_REQUEST, e);
     yield put(getTheRatesFailure());

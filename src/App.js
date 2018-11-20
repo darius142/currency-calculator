@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -11,6 +12,7 @@ import CurrencyCalculator from 'pages/CurrencyCalculator';
 import CurrencyRateInfo from 'pages/CurrencyRateInfo';
 import NotFound from 'pages/NotFound';
 
+import { getTheRatesRequest } from 'actions/exchange';
 import { root, currencyRateInfo } from 'routes/internal';
 
 import './App.css';
@@ -24,6 +26,10 @@ const styles = (theme) => ({
 class App extends Component {
 
   componentWillMount() {
+    const { getCurrencyRates } = this.props;
+    var date = moment().format('YYYY-MM-DD');
+    console.log('date is', date)
+    getCurrencyRates(date);
   }
 
   render() {
@@ -50,10 +56,10 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-});
-
 const mapDispatchToProps = (dispatch) => ({
+  getCurrencyRates: (date) => {
+    dispatch(getTheRatesRequest(date))
+  }
 });
 
-export default withStyles(styles)(withRouter(connect(mapStateToProps, mapDispatchToProps)(App)));
+export default withStyles(styles)(withRouter(connect(null, mapDispatchToProps)(App)));
