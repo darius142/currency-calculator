@@ -20,7 +20,7 @@ const styles = (theme) => ({
   modifyThead: {
     boxShadow: 'none!important',
     backgroundColor: 'rgba(227, 227, 227, 0.7)',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'none!important'
     },
   },
@@ -29,12 +29,12 @@ const styles = (theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'contents!important'
     },
   },
   modifyGroupTr: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       marginBottom: '10px',
       border: '1px solid rgba(0,0,0,0.1)'
     },
@@ -53,7 +53,7 @@ const styles = (theme) => ({
     boxShadow: 'none'
   },
   modifyTbody: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       minWidth: '100%!important'
     }
   },
@@ -75,7 +75,7 @@ const styles = (theme) => ({
       },
 
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'table-cell',
       textAlign: 'left',
       fontSize: '14px',
@@ -85,34 +85,10 @@ const styles = (theme) => ({
   }
 });
 
-const data = [
-  {
-    unit_value: 1,
-    currency_code: "AUD",
-    median_rate: "4.753180",
-    buying_rate: "4.738920",
-    selling_rate: "4.767440",
-  },
-  {
-    unit_value: 1,
-    currency_code: "CAD",
-    median_rate: ".939728",
-    buying_rate: "4.924909",
-    selling_rate: "4.954547",
-  },
-  {
-    unit_value: 1,
-    currency_code: "DKK",
-    median_rate: "0.995121",
-    buying_rate: "0.992136",
-    selling_rate: "0.998106",
-  }
-];
-
 
 class CurrencyRateInfo extends Component {
   state = {
-    data: data
+    rates: []
   };
 
   componentWillReceiveProps(nextProps) {
@@ -124,34 +100,6 @@ class CurrencyRateInfo extends Component {
   render() {
     const { classes, isFetching } = this.props;
     const { rates } = this.state;
-
-    const columns = [
-      {
-        id: 'amount',
-        Header: 'Amount',
-        accessor: d => <span data-label='Amount'>{rates.unit_value || ''}</span>
-      },
-      {
-        id: 'currency_code',
-        Header: 'Currency code',
-        accessor: d => <span data-label='Currency code'>{rates.currency_code || ''}</span>,
-      },
-      {
-        id: 'median_rate',
-        Header: 'Median rate',
-        accessor: d => <span data-label='Median rate'>{rates.median_rate || ''}</span>,
-      },
-      {
-        id: 'buying_rate',
-        Header: 'Buying rate',
-        accessor: d => <span data-label='Median rate'>{rates.buying_rate || ''}</span>,
-      },
-      {
-        id: 'selling_rate',
-        Header: 'Selling rate',
-        accessor: d => <span data-label='Selling rate'>{rates.selling_rate || ''}</span>,
-      }
-    ];
 
     return (
       <div className={classes.root}>
